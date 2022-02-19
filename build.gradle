@@ -1,9 +1,10 @@
 
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '2.6.3'
 }
-
-group 'org.example'
+apply plugin: 'io.spring.dependency-management'
+group'kz.gesti9.comments'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -11,6 +12,9 @@ repositories {
 }
 
 dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation 'org.thymeleaf:thymeleaf'
+    implementation 'org.thymeleaf:thymeleaf-spring5'
 }
 
 test {

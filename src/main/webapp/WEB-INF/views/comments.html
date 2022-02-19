@@ -1,0 +1,15 @@
+
+<table>
+    <thead>
+    <tr>
+        <th> Автор </th>
+        <th> Комментарии </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="comment : ${comments}">
+        <td><span th:text="${comment.authorName}"></span></td>
+        <td><span th:text="${comment.body}"></span></td>
+    </tr>
+    </tbody>
+</table>
