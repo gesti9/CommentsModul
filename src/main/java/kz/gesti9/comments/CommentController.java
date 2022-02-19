@@ -11,24 +11,22 @@ import java.util.List;
 
 
 @Controller
-@RequestMapping("comment")
+@RequestMapping("comments")
 public class CommentController {
     private final static List<Comment> comments = new ArrayList<>();
-//    @GetMapping
-//    public List<Comment> getComments(){
-//        ArrayList<Comment> comments = new ArrayList<>();
-//        Comment comment = new Comment();
-//        comment.setAuthorName("Marat");
-//        comment.setBody("Zdarova bandity");
-//        comments.add(comment);
-//        return comments;
-//    }
+
     @GetMapping
     public String showAll(Model model) {
         model.addAttribute("comments", comments);
-        model.addAttribute("comment", new Comment());
-        return "index";
+        return "comments";
     }
+
+    @GetMapping("new")
+    public String addCommentPage(Model model) {
+        model.addAttribute("comment", new Comment());
+        return "addComment";
+    }
+
     @PostMapping
     public String addComment(@ModelAttribute Comment comment, Model model){
         model.addAttribute("comments",comments);

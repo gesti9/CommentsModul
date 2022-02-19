@@ -1,15 +1,31 @@
+<label for="comment-body">Комментарии:</label>
+<ul>
+    <li th:each="comment : ${comments}">
+        <div class="left">
+            <div class="form-group">
+                    <textarea type="text" class="form-control" id="comment-body" placeholder="comment"
+                              th:text="${comment.content}"></textarea>
+            </div>
+            <div>
+                <button type="submit" id="comment-delete">Удалить</button>
+                <button type="submit" id="comment-add">Ответить</button>
+            </div>
+            </form>
+            <ul th:fragment="showComment(comment)" th:unless="${#lists.isEmpty(comment.answers)}">
+                <li th:each="child : ${comment.answers}" th:inline="text">
+                    <div class="left" th:fragment="showComment(comment)">
+                        <div class="form-group">
+                                <textarea type="text" class="form-control" id="comment-body" placeholder="comment"
+                                          th:text="${child.content}"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" id="comment-delete">Удалить</button>
+                            <button type="submit" id="comment-add">Ответить</button>
+                        </div>
+                        <ul th:replace="this::showComment(${child})"></ul>
+                </li>
+            </ul>
 
-<table>
-    <thead>
-    <tr>
-        <th> Автор </th>
-        <th> Комментарии </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="comment : ${comments}">
-        <td><span th:text="${comment.authorName}"></span></td>
-        <td><span th:text="${comment.body}"></span></td>
-    </tr>
-    </tbody>
-</table>
+        </div>
+    </li>
+</ul>

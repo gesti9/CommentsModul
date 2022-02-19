@@ -1,0 +1,30 @@
+<form id="addCommentForm" action="#" th:action="@{/comment}" th:object="${comment}" method="post">
+    <div class="form-group">
+        <label for="authorName">Автор:</label>
+        <input type="text" class="form-control" id="authorName" placeholder="Enter your name">
+    </div>
+    <div class="form-group">
+        <label for="commentBody">Текст сообщения:</label>
+        <textarea type="text" class="form-control" id="commentBody" placeholder="comment"th:field="*{body}"></textarea >
+    </div>
+    <div>
+        <button  id="comment-add">Отправить</button>
+    </div>
+</form>
+<script>
+            $( "#addCommentForm" ).submit(function( event ) {
+             event.preventDefault();
+             var http = new XMLHttpRequest();
+             http.open("POST", "/comments", true);
+             http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+             var authorName = $("#authorName").first().val();
+             var commentBody = $("#commentBody").first().val();
+             var params = "authorName="+authorName+"&body="+commentBody;
+             http.send(params);
+
+             http.onload = function() {
+                loadComments();
+                $("#addCommentForm")[0].reset();
+            }
+            });
+  </script>

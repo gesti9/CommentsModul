@@ -10,7 +10,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
             integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
             crossorigin="anonymous"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -20,61 +20,24 @@
                 Добавить коментарий
             </h2>
         </div>
-        <div class="col-lg-6">
-
-            <div id="comment-field"></div>
-        </div>
-        <div class="col-lg-6">
-            <form action="#" th:action="@{/comment}" th:object="${comment}" method="post">
-                <div class="form-group">
-                    <label for="comment-name">Автор:</label>
-                    <input type="text" class="form-control" id="comment-name" placeholder="Enter your name" th:field="*{authorName}">
-                </div>
-                <div class="form-group">
-                    <label for="comment-body">Текст сообщения:</label>
-                    <textarea type="text" class="form-control" id="comment-body" placeholder="comment"th:field="*{body}"></textarea >
-                </div>
-                <div>
-                    <button type="submit" id="comment-add">Отправить</button>
-                </div>
-            </form>
+        <div id="addComment">
         </div>
     </div>
-    <label for="comment-body">Комментарии:</label>
-    <ul>
-        <li th:each="comment : ${comments}">
+    <div id="commentSection" >
+    </div>
+    <script>
+           function loadAddComment() {
+                $('#addComment').load("/comments/new")
+           }
+           function loadComments(){
+                $('#commentSection').load("/comments")
+            }
+            $(document).ready(function () {
+                loadAddComment();
+                loadComments();
+            })
+        </script>
 
-            <div class="left">
-                <div class="form-group">
-                    <textarea type="text" class="form-control" id="comment-body" placeholder="comment"
-                              th:text="${comment.content}"></textarea>
-                </div>
-                <div>
-                    <button type="submit" id="comment-add">Удалить</button>
-                    <button type="submit" id="comment-add">Ответить</button>
-                </div>
-                </form>
-                <ul th:fragment="showComment(comment)" th:unless="${#lists.isEmpty(comment.answers)}">
-                    <li th:each="child : ${comment.answers}" th:inline="text">
-                        <div class="left" th:fragment="showComment(comment)">
-                            <div class="form-group">
-                                <textarea type="text" class="form-control" id="comment-body" placeholder="comment"
-                                          th:text="${child.content}"></textarea>
-                            </div>
-                            <div>
-                                <button type="submit" id="comment-add">Удалить</button>
-                                <button type="submit" id="comment-add">Ответить</button>
-                            </div>
-                            <ul th:replace="this::showComment(${child})"></ul>
-                    </li>
-                </ul>
-
-            </div>
-        </li>
-    </ul>
-
-</div>
-</div>
 </div>
 </body>
 </html>
