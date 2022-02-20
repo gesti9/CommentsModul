@@ -2,8 +2,6 @@ package kz.gesti9.comments;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.BindingResultUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -28,10 +26,26 @@ public class CommentController {
     }
 
     @PostMapping
-    public String addComment(@ModelAttribute Comment comment, Model model){
-        model.addAttribute("comments",comments);
+    public String addComment(@ModelAttribute Comment comment, Model model) {
+        model.addAttribute("comments", comments);
         model.addAttribute("comment", new Comment());
+        comment.setId(comment.getContent().length());
         comments.add(comment);
         return "index";
     }
+
+    @PostMapping("delete/{id}")
+    public String deleteComment(@PathVariable Integer id) {
+        for (int i = 0; i < comments.size(); i++) {
+            Comment comment = comments.get(i);
+            if (comment.getId() == id) {
+                comments.remove(i);
+                break;
+            }
+        }
+
+        return "index";
+    }
+
+
 }

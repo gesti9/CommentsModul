@@ -7,10 +7,29 @@
                               th:text="${comment.content}"></textarea>
             </div>
             <div>
-                <button type="submit" id="comment-delete">Удалить</button>
+
+                <button th:attr="commentId=${comment.getId}" onclick="deleteComment(this.attributes.commentid.value)"
+                        class="comment-delete">Удалить
+                </button>
                 <button type="submit" id="comment-add">Ответить</button>
+
             </div>
-            </form>
+            <script>
+                function deleteComment(id){
+                var http = new XMLHttpRequest();
+                http.open("POST", "/comments/delete/" + id, true);
+
+             http.send();
+
+             http.onload = function() {
+                loadComments();
+
+            }
+
+
+                };
+
+            </script>
             <ul th:fragment="showComment(comment)" th:unless="${#lists.isEmpty(comment.answers)}">
                 <li th:each="child : ${comment.answers}" th:inline="text">
                     <div class="left" th:fragment="showComment(comment)">

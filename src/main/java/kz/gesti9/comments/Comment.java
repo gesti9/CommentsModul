@@ -5,7 +5,8 @@ import java.util.List;
 public class Comment {
     private String authorName;
     private String body;
-    private List <Comment> answers;
+    private List<Comment> answers;
+    private int id;
 
     public String getAuthorName() {
         return authorName;
@@ -24,7 +25,7 @@ public class Comment {
     }
 
     public String getContent(){
-        return "Автор: " + authorName + "\n" + body ;
+        return "Автор: " + authorName + "\n" + body;
     }
 
     public List<Comment> getAnswers() {
@@ -33,5 +34,13 @@ public class Comment {
 
     public void setAnswers(List<Comment> answers) {
         this.answers = answers;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
